@@ -118,3 +118,16 @@ def contact_form(request):
         return JsonResponse({"status": "success"})
 
     return JsonResponse({"status": "error"})
+
+
+
+from django.shortcuts import render
+from .models import Hotel
+
+def hotel_list(request):
+    hotels = Hotel.objects.all().order_by('-id')
+    return render(request, 'website/hotel_list.html', {'hotels': hotels})
+
+def room(request):
+    hotels = Hotel.objects.all().order_by('-id')
+    return render(request, "website/room.html", {"hotels": hotels})

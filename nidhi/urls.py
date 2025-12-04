@@ -16,23 +16,42 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from website.views import home, about, room, amenities, login, contact, booking_page, booking_form
-from website.views import register, login_user, logout_user, login as login_page ,contact_form
+from website.views import (
+    home, about, room, amenities, contact, booking_page, booking_form,
+    register, login_user, logout_user, login as login_page,
+    contact_form, hotel_list
+)
+
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
     path('', home, name='home'),
     path('about/', about, name='about'),
     path('room/', room, name='room'),
     path('amenities/', amenities, name='amenities'),
-    path('booking/', booking_page, name='booking'),        # page
-    path('booking-form/', booking_form, name='booking_form'), # ajax
-    path('login/', login, name='login'),
-    path('contact/', contact, name='contact'),
+
+    path('booking/', booking_page, name='booking'),
+    path('booking-form/', booking_form, name='booking_form'),
+
+    # Auth
     path("register/", register, name="register"),
+    path("login/", login_page, name="login"),
     path("login-user/", login_user, name="login_user"),
     path("logout/", logout_user, name="logout"),
-    path("login/", login_page, name="login"),
+
+    # Contact
+    path('contact/', contact, name='contact'),
     path("contact-form/", contact_form, name="contact_form"),
+
+    # Hotels (Admin added - display only)
+    path('hotels/', hotel_list, name='hotel_list'),
 ]
 
+
+# ✅ Media config MUST be at end
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

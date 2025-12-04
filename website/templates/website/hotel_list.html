@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hotels</title>
+</head>
+<body>
+
+<h2>Hotels added from Admin</h2>
+
+{% for hotel in hotels %}
+<div style="border:1px solid #ccc; padding:15px; margin-bottom:20px;">
+    
+    <img src="{{ hotel.image.url }}" width="250">
+    
+    <h3>{{ hotel.name }}</h3>
+    <p>₹ {{ hotel.price }}</p>
+    <p>{{ hotel.description }}</p>
+
+</div>
+{% empty %}
+<p>No hotels added yet.</p>
+{% endfor %}
+
+</body>
+</html>
