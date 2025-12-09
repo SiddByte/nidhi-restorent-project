@@ -104,20 +104,48 @@ def login(request):
     return render(request, 'website/login.html')
 
 
+from django.core.mail import send_mail
 from django.http import JsonResponse
 from .models import Contact
+from django.conf import settings
 
 def contact_form(request):
     if request.method == "POST":
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        subject = request.POST.get("subject")
+        message = request.POST.get("message")
+
+        # Save to DB
         Contact.objects.create(
-            name=request.POST.get("name"),
-            email=request.POST.get("email"),
-            subject=request.POST.get("subject"),
-            message=request.POST.get("message"),
+            name=name,
+            email=email,
+            subject=subject,
+            message=message,
         )
+
+        # Send Email
+        full_message = f"""
+        New Contact Form Submission:
+
+        Name: {name}
+        Email: {email}
+        Subject: {subject}
+        Message: {message}
+        """
+
+        send_mail(
+            subject=f"New Contact Form Submission: {subject}",
+            message=full_message,
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[settings.EMAIL_HOST_USER],  # jaha mail receive karna hai
+            fail_silently=False,
+        )
+
         return JsonResponse({"status": "success"})
 
     return JsonResponse({"status": "error"})
+
 
 
 
@@ -131,3 +159,7 @@ def hotel_list(request):
 def room(request):
     hotels = Hotel.objects.all().order_by('-id')
     return render(request, "website/room.html", {"hotels": hotels})
+
+def room_home(request):
+    hotels = Hotel.objects.all().order_by('-id')
+    return render(request, "website/index.html", {"hotels": hotels})

@@ -17,8 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from website.views import (
-    home, about, room, amenities, contact, booking_page, booking_form,
-    register, login_user, logout_user, login as login_page,
+    home, about, room, amenities, contact, booking_page, booking_form, room_home ,
+    register, login_user, logout_user, login as login_page, 
     contact_form, hotel_list
 )
 
@@ -46,6 +46,7 @@ urlpatterns = [
     # Contact
     path('contact/', contact, name='contact'),
     path("contact-form/", contact_form, name="contact_form"),
+    
 
     # Hotels (Admin added - display only)
     path('hotels/', hotel_list, name='hotel_list'),
