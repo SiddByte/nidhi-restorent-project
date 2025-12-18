@@ -24,9 +24,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-h)!(_xl81c3m6m*i$t+pgrly1ql&@9ev10497p1!!001b#2#qu'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'nidhi-restorent-project.onrender.com',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://nidhi-restorent-project.onrender.com',
+]
 
 
 # Application definition
